@@ -18,7 +18,7 @@ class Database:
         self.db = self.client[db_name]
         
         # Test connection
-        await self.db.admin.command('ping')
+        await self.client.admin.command('ping')
         print(f"Connected to MongoDB: {db_name}")
 
     async def close(self):
