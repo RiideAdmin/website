@@ -368,7 +368,168 @@ async def get_faqs(category: Optional[str] = None):
         data=faqs
     )
 
-# ==================== ROOT ENDPOINT ====================
+# ==================== DRIVER ENDPOINTS ====================
+
+@api_router.post("/drivers/register", response_model=APIResponse)
+async def register_driver(driver_create: DriverCreate, current_user: User = Depends(get_current_user)):
+    try:
+        # Check if user is already a driver
+        existing_driver = await db.get_driver_by_user_id(current_user.id)
+        if existing_driver:
+            raise HTTPException(status_code=400, detail="User is already registered as a driver")
+        
+        driver_data = driver_create.dict()
+        driver_data["user_id"] = current_user.id
+        
+        driver = Driver(**driver_data)
+        driver_id = await db.create_document("drivers", driver.dict())
+        
+        return APIResponse(
+            success=True,
+            message="Driver registered successfully",
+            data=driver.dict()
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/drivers/profile", response_model=APIResponse)
+async def get_driver_profile(current_user: User = Depends(get_current_user)):
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver:
+        raise HTTPException(status_code=404, detail="Driver profile not found")
+    
+    return APIResponse(
+        success=True,
+        message="Driver profile retrieved successfully",
+        data=driver
+    )
+
+@api_router.put("/drivers/status", response_model=APIResponse)
+async def update_driver_status(status_update: dict, current_user: User = Depends(get_current_user)):
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver:
+        raise HTTPException(status_code=404, detail="Driver profile not found")
+    
+    updated = await db.update_document("drivers", driver["id"], status_update)
+    if not updated:
+        raise HTTPException(status_code=500, detail="Failed to update driver status")
+    
+    return APIResponse(
+        success=True,
+        message="Driver status updated successfully"
+    )
+
+@api_router.put("/drivers/location", response_model=APIResponse)
+async def update_driver_location(location_data: dict, current_user: User = Depends(get_current_user)):
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver:
+        raise HTTPException(status_code=404, detail="Driver profile not found")
+    
+    updated = await db.update_document("drivers", driver["id"], location_data)
+    if not updated:
+        raise HTTPException(status_code=500, detail="Failed to update driver location")
+    
+    return APIResponse(
+        success=True,
+        message="Driver location updated successfully"
+    )
+
+@api_router.get("/drivers/available-jobs", response_model=APIResponse)
+async def get_available_jobs(current_user: User = Depends(get_current_user)):
+    # Get pending bookings without assigned drivers
+    jobs = await db.find_documents("bookings", {
+        "status": "requested",
+        "driver_id": None
+    }, limit=10)
+    
+    return APIResponse(
+        success=True,
+        message="Available jobs retrieved successfully",
+        data=jobs
+    )
+
+@api_router.post("/drivers/accept-job", response_model=APIResponse)
+async def accept_job(job_data: dict, current_user: User = Depends(get_current_user)):
+    booking_id = job_data.get("booking_id")
+    if not booking_id:
+        raise HTTPException(status_code=400, detail="Booking ID required")
+    
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver:
+        raise HTTPException(status_code=404, detail="Driver profile not found")
+    
+    # Update booking with driver assignment
+    booking_update = {
+        "driver_id": driver["id"],
+        "status": "driver_assigned",
+        "started_at": datetime.utcnow().isoformat()
+    }
+    
+    updated = await db.update_document("bookings", booking_id, booking_update)
+    if not updated:
+        raise HTTPException(status_code=500, detail="Failed to accept job")
+    
+    # Get the updated booking
+    booking = await db.get_document("bookings", booking_id)
+    
+    return APIResponse(
+        success=True,
+        message="Job accepted successfully",
+        data=booking
+    )
+
+@api_router.put("/bookings/{booking_id}/status", response_model=APIResponse)
+async def update_booking_status(booking_id: str, status_update: dict, current_user: User = Depends(get_current_user)):
+    booking = await db.get_document("bookings", booking_id)
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking not found")
+    
+    # Verify driver owns this booking
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver or booking.get("driver_id") != driver["id"]:
+        raise HTTPException(status_code=403, detail="Not authorized to update this booking")
+    
+    # Add completion logic
+    if status_update.get("status") == "completed":
+        status_update["completed_at"] = datetime.utcnow().isoformat()
+        if not status_update.get("actual_cost"):
+            status_update["actual_cost"] = booking.get("total_price", booking.get("estimated_cost", 0))
+        
+        # Update driver earnings
+        earnings_update = {
+            "total_earnings": driver.get("total_earnings", 0) + status_update["actual_cost"],
+            "total_rides": driver.get("total_rides", 0) + 1
+        }
+        await db.update_document("drivers", driver["id"], earnings_update)
+    
+    updated = await db.update_document("bookings", booking_id, status_update)
+    if not updated:
+        raise HTTPException(status_code=500, detail="Failed to update booking status")
+    
+    return APIResponse(
+        success=True,
+        message="Booking status updated successfully"
+    )
+
+@api_router.get("/drivers/current-job", response_model=APIResponse)
+async def get_current_job(current_user: User = Depends(get_current_user)):
+    driver = await db.get_driver_by_user_id(current_user.id)
+    if not driver:
+        raise HTTPException(status_code=404, detail="Driver profile not found")
+    
+    # Find current active booking for this driver
+    current_jobs = await db.find_documents("bookings", {
+        "driver_id": driver["id"],
+        "status": {"$in": ["driver_assigned", "en_route_to_pickup", "arrived_pickup", "en_route_to_dropoff"]}
+    }, limit=1)
+    
+    current_job = current_jobs[0] if current_jobs else None
+    
+    return APIResponse(
+        success=True,
+        message="Current job retrieved successfully",
+        data=current_job
+    )
 
 @api_router.get("/")
 async def root():
