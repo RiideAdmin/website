@@ -308,10 +308,10 @@ const LandingPage = () => {
           </div>
 
           <div className="fleet-grid">
-            {[...mockVehicles, ...mockMarineVehicles].map((vehicle) => (
+            {vehicles.map((vehicle) => (
               <div key={vehicle.id} className="fleet-card">
                 <div className="fleet-image">
-                  <img src={vehicle.image} alt={vehicle.name} />
+                  <img src={vehicle.image_url} alt={vehicle.name} />
                   <div className="fleet-badge">{vehicle.type}</div>
                 </div>
                 
@@ -320,9 +320,9 @@ const LandingPage = () => {
                   <p className="body-small">{vehicle.description}</p>
                   
                   <div className="fleet-features">
-                    {vehicle.features.slice(0, 2).map((feature, index) => (
+                    {vehicle.features?.slice(0, 2).map((feature, index) => (
                       <span key={index} className="feature-tag">{feature}</span>
-                    ))}
+                    )) || []}
                   </div>
 
                   <div className="fleet-details">
@@ -331,7 +331,7 @@ const LandingPage = () => {
                       {vehicle.passengers} passengers
                     </div>
                     <div className="price-info">
-                      <span className="price">${vehicle.pricePerHour}/hr</span>
+                      <span className="price">${vehicle.price_per_hour}/hr</span>
                     </div>
                   </div>
 
