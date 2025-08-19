@@ -572,7 +572,7 @@ const LandingPage = () => {
             </div>
 
             <Accordion type="single" collapsible className="faq-accordion">
-              {mockFAQs.map((faq) => (
+              {faqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id.toString()}>
                   <AccordionTrigger className="accordion-trigger">
                     {faq.question}
