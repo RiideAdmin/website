@@ -7,8 +7,11 @@ import uuid
 # Enums
 class BookingStatus(str, Enum):
     PENDING = "pending"
-    CONFIRMED = "confirmed"
-    ACTIVE = "active"
+    REQUESTED = "requested"
+    DRIVER_ASSIGNED = "driver_assigned"
+    EN_ROUTE_TO_PICKUP = "en_route_to_pickup"
+    ARRIVED_PICKUP = "arrived_pickup"
+    EN_ROUTE_TO_DROPOFF = "en_route_to_dropoff"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
 
