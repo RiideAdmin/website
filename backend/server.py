@@ -531,6 +531,8 @@ async def get_current_job(current_user: User = Depends(get_current_user)):
         data=current_job
     )
 
+# ==================== ROOT ENDPOINT ====================
+
 @api_router.get("/")
 async def root():
     return APIResponse(
