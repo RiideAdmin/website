@@ -505,7 +505,7 @@ const LandingPage = () => {
           </div>
 
           <div className="testimonials-grid">
-            {mockTestimonials.map((testimonial) => (
+            {testimonials.map((testimonial) => (
               <div key={testimonial.id} className="testimonial-card">
                 <div className="testimonial-rating">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -514,7 +514,7 @@ const LandingPage = () => {
                 </div>
                 <p className="testimonial-content">"{testimonial.content}"</p>
                 <div className="testimonial-author">
-                  <img src={testimonial.avatar} alt={testimonial.name} className="author-avatar" />
+                  <img src={testimonial.avatar_url} alt={testimonial.name} className="author-avatar" />
                   <div className="author-info">
                     <div className="author-name">{testimonial.name}</div>
                     <div className="author-role">{testimonial.role}</div>
