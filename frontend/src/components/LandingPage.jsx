@@ -104,7 +104,9 @@ const LandingPage = () => {
 
           <div className="header-actions">
             <Button variant="ghost" className="btn-secondary driver-btn">
-              Go Live & Earn
+              <a href="/driver" style={{ textDecoration: 'none', color: 'inherit' }}>
+                Go Live & Earn
+              </a>
             </Button>
             <Button className="btn-primary">
               Connect Wallet
