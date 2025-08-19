@@ -1302,3 +1302,630 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* Driver Dashboard Styles */
+.driver-page {
+  background: var(--bg-primary);
+  min-height: 100vh;
+  padding-top: 80px;
+}
+
+.driver-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 40px);
+}
+
+.driver-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-height: calc(100vh - 120px);
+}
+
+/* Driver Header */
+.driver-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-secondary);
+  padding: 20px 24px;
+  border-radius: 0px;
+  border: 1px solid var(--border-subtle);
+}
+
+.driver-status {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #666;
+}
+
+.status-dot.online {
+  background: var(--brand-primary);
+  box-shadow: 0 0 0 2px rgba(34, 181, 115, 0.3);
+}
+
+.status-dot.offline {
+  background: #666;
+}
+
+.status-text {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.driver-earnings {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--brand-primary);
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.power-btn {
+  min-width: 120px;
+  border-radius: 0px;
+}
+
+.power-btn.online {
+  background: #666;
+  color: white;
+}
+
+.power-btn.offline {
+  background: var(--brand-primary);
+  color: #000000;
+}
+
+/* Current Job Status */
+.current-job-status {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+  padding: 24px;
+}
+
+.job-status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.status-badge {
+  color: white;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 0px;
+}
+
+.job-fare {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--brand-primary);
+}
+
+.job-route-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.route-point {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+}
+
+.route-line {
+  width: 2px;
+  height: 20px;
+  background: var(--border-subtle);
+  margin-left: 10px;
+}
+
+.passenger-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+  padding: 16px;
+  background: var(--bg-primary);
+  border-radius: 0px;
+}
+
+.passenger-name,
+.passenger-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+.job-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.action-btn {
+  min-width: 160px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 0px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn.primary {
+  background: var(--brand-primary);
+  color: #000000;
+}
+
+.action-btn.success {
+  background: #10B981;
+  color: white;
+}
+
+/* Waiting State */
+.waiting-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+  min-height: 300px;
+}
+
+.waiting-animation {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.pulse-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(34, 181, 115, 0.1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.car-icon {
+  color: var(--brand-primary);
+  z-index: 1;
+  position: relative;
+}
+
+@keyframes pulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+}
+
+.waiting-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.waiting-text {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* Offline State */
+.offline-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+  min-height: 300px;
+}
+
+.offline-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.offline-icon {
+  color: #666;
+}
+
+.offline-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.offline-text {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* Driver Map */
+.driver-map {
+  flex: 1;
+  min-height: 400px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.map-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+.location-marker {
+  color: var(--brand-primary);
+}
+
+.map-info p {
+  color: var(--text-primary);
+  font-weight: 500;
+  margin: 0;
+}
+
+.coordinates {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.map-overlay p {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* In-App Map */
+.in-app-map {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.map-canvas {
+  flex: 1;
+  position: relative;
+  background: #2a2a2a;
+  overflow: hidden;
+}
+
+.map-route {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.current-position,
+.target-position {
+  position: absolute;
+  z-index: 2;
+  background: white;
+  border-radius: 50%;
+  padding: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.route-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.map-info {
+  padding: 16px;
+  background: var(--bg-primary);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.eta-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-secondary);
+}
+
+/* Job Offer Modal */
+.job-offer-modal {
+  max-width: 500px;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+}
+
+.job-offer-title {
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.job-offer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 4px 0;
+}
+
+.job-details {
+  display: grid;
+  grid-template-columns: 1fr 120px;
+  gap: 20px;
+}
+
+.job-route {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.route-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.route-icon {
+  flex-shrink: 0;
+  padding: 2px;
+}
+
+.route-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.route-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.route-address {
+  color: var(--text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.job-map-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.map-placeholder {
+  width: 100px;
+  height: 80px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.map-route {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.pickup-marker,
+.drop-marker {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: white;
+}
+
+.pickup-marker {
+  background: #10B981;
+}
+
+.drop-marker {
+  background: #EF4444;
+}
+
+.route-path {
+  width: 2px;
+  height: 20px;
+  background: var(--brand-primary);
+}
+
+.job-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: var(--bg-secondary);
+  border-radius: 0px;
+}
+
+.stat-item svg {
+  color: var(--brand-primary);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-left: auto;
+}
+
+.passenger-info {
+  text-align: center;
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: 0px;
+}
+
+.passenger-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.passenger-phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.job-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.decline-btn {
+  border-radius: 0px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.decline-btn:hover {
+  background: #666;
+  color: white;
+}
+
+.accept-btn {
+  border-radius: 0px;
+  background: var(--brand-primary);
+  color: #000000;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .driver-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  .driver-status {
+    justify-content: center;
+  }
+
+  .header-actions {
+    justify-content: center;
+  }
+
+  .job-details {
+    grid-template-columns: 1fr;
+  }
+
+  .job-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .job-actions {
+    grid-template-columns: 1fr;
+  }
+}
