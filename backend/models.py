@@ -259,6 +259,11 @@ class Driver(BaseModel):
     rating: float = 5.0
     total_rides: int = 0
     earnings: float = 0.0
+    # Driver location and state
+    driver_online: bool = False
+    current_lat: Optional[float] = None
+    current_lng: Optional[float] = None
+    total_earnings: float = 0.0
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class DriverCreate(BaseModel):
