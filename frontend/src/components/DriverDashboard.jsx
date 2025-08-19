@@ -99,13 +99,7 @@ const DriverDashboard = () => {
         </div>
 
         <div className="header-actions">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="settings-btn"
-          >
-            <Settings className="w-4 h-4" />
-          </Button>
+          <DriverSettings />
           
           <Button
             className={`power-btn ${online ? 'online' : 'offline'}`}
