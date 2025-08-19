@@ -329,8 +329,8 @@ const BookingBox = () => {
                   <SelectValue placeholder="Select pickup location" />
                 </SelectTrigger>
                 <SelectContent>
-                  {mockLocations.map(location => (
-                    <SelectItem key={location} value={location}>{location}</SelectItem>
+                  {locations.map(location => (
+                    <SelectItem key={location.id} value={location.name}>{location.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
