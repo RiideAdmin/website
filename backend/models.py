@@ -131,6 +131,17 @@ class Booking(BaseModel):
     extras_price: float
     discount_amount: float = 0.0
     total_price: float
+    # Driver flow fields
+    pickup_lat: Optional[float] = None
+    pickup_lng: Optional[float] = None
+    drop_lat: Optional[float] = None
+    drop_lng: Optional[float] = None
+    estimated_cost: Optional[float] = None
+    actual_cost: Optional[float] = None
+    started_at: Optional[datetime] = None
+    completed_at: Optional[datetime] = None
+    passenger_name: Optional[str] = None
+    passenger_phone: Optional[str] = None
     status: BookingStatus = BookingStatus.PENDING
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
