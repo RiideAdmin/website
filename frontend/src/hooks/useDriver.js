@@ -141,8 +141,20 @@ export function DriverProvider({ children }) {
         }
       }
     } catch (error) {
-      // Driver profile doesn't exist yet
-      console.log('Driver profile not found');
+      // Driver profile doesn't exist yet, set up mock profile for demo
+      console.log('Driver profile not found, using mock profile');
+      const mockProfile = {
+        id: 'mock_driver_123',
+        user_id: 'mock_user_123',
+        license_number: 'DL123456789',
+        rating: 4.9,
+        total_rides: 156,
+        total_earnings: 2847.50,
+        driver_online: false,
+        current_lat: 37.7749,
+        current_lng: -122.4194
+      };
+      dispatch({ type: ACTIONS.SET_PROFILE, payload: mockProfile });
     }
   };
 
