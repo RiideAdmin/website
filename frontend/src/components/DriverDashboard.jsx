@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDriver } from '../hooks/useDriver';
 import JobOfferModal from './JobOfferModal';
+import DriverSettings from './DriverSettings';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { 
@@ -12,8 +13,7 @@ import {
   CheckCircle2,
   Car,
   Users,
-  Phone,
-  Settings
+  Phone
 } from 'lucide-react';
 
 const DriverDashboard = () => {
