@@ -132,7 +132,9 @@ const LandingPage = () => {
             <a href="#wallet" className="mobile-nav-link">Wallet</a>
             <div className="mobile-nav-actions">
               <Button variant="ghost" className="btn-secondary w-full">
-                Go Live & Earn
+                <a href="/driver" style={{ textDecoration: 'none', color: 'inherit' }}>
+                  Go Live & Earn
+                </a>
               </Button>
               <Button className="btn-primary w-full">
                 Connect Wallet
