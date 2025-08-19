@@ -438,15 +438,15 @@ const BookingBox = () => {
         <div className="form-group">
           <label className="form-label">Extras</label>
           <div className="extras-grid">
-            {Object.entries(mockPricingCalculator.extras).map(([key, extra]) => (
-              <div key={key} className="extra-item">
+            {availableExtras.map((extra) => (
+              <div key={extra.key} className="extra-item">
                 <Checkbox
-                  id={key}
-                  checked={bookingData.extras.includes(key)}
-                  onCheckedChange={(checked) => handleExtrasChange(key, checked)}
+                  id={extra.key}
+                  checked={bookingData.extras.includes(extra.key)}
+                  onCheckedChange={(checked) => handleExtrasChange(extra.key, checked)}
                 />
-                <label htmlFor={key} className="extra-label">
-                  {extra.label} (+${extra.price})
+                <label htmlFor={extra.key} className="extra-label">
+                  {extra.label}
                 </label>
               </div>
             ))}
@@ -464,9 +464,9 @@ const BookingBox = () => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {mockPricingCalculator.paymentMethods.map(method => (
+              {paymentMethods.map(method => (
                 <SelectItem key={method.id} value={method.id}>
-                  {method.name} {method.discount > 0 && `(-${Math.round(method.discount * 100)}%)`}
+                  {method.name}
                 </SelectItem>
               ))}
             </SelectContent>
