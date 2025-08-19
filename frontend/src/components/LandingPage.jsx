@@ -12,14 +12,72 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './
 const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
+  const [loading, setLoading] = useState(true);
+  
+  // Data state
+  const [vehicles, setVehicles] = useState([]);
+  const [services, setServices] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [blogPosts, setBlogPosts] = useState([]);
+  const [faqs, setFaqs] = useState([]);
+
+  // Load all data on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        
+        // Load all data in parallel
+        const [
+          vehiclesResponse,
+          servicesResponse,
+          testimonialsResponse,
+          blogResponse,
+          faqsResponse
+        ] = await Promise.all([
+          VehicleService.getAll(),
+          ContentService.getServices(),
+          ContentService.getTestimonials(),
+          ContentService.getBlogPosts(3),
+          ContentService.getFAQs()
+        ]);
+
+        if (vehiclesResponse.success) setVehicles(vehiclesResponse.data);
+        if (servicesResponse.success) setServices(servicesResponse.data);
+        if (testimonialsResponse.success) setTestimonials(testimonialsResponse.data);
+        if (blogResponse.success) setBlogPosts(blogResponse.data);
+        if (faqsResponse.success) setFaqs(faqsResponse.data);
+        
+      } catch (error) {
+        console.error('Failed to load data:', error);
+        // Set fallback data if API fails
+        setServices([
+          {
+            id: 1,
+            title: "Premium Chauffeur",
+            description: "Professional drivers with luxury EVs for business or leisure",
+            icon: "Car",
+            features: ["Professional Drivers", "Real-time Tracking", "Premium Vehicles", "24/7 Service"],
+            starting_price: 85
+          }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   useEffect(() => {
     // Auto-rotate services showcase
-    const interval = setInterval(() => {
-      setActiveService((prev) => (prev + 1) % mockServices.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
+    if (services.length > 0) {
+      const interval = setInterval(() => {
+        setActiveService((prev) => (prev + 1) % services.length);
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [services.length]);
 
   const scrollToBooking = () => {
     document.getElementById('booking-section')?.scrollIntoView({ behavior: 'smooth' });
