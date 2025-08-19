@@ -1,11 +1,12 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Calendar, Clock, MapPin, Users, Car, CreditCard, Tag, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Checkbox } from './ui/checkbox';
-import { mockPricingCalculator, mockLocations } from '../data/mock';
+import { LocationService, PricingService, BookingService, AuthService, handleApiError } from '../services/api';
+import { useToast } from '../hooks/use-toast';
 
 const BookingBox = () => {
   const [activeTab, setActiveTab] = useState('chauffeur');
