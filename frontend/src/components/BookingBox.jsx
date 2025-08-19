@@ -10,6 +10,11 @@ import { useToast } from '../hooks/use-toast';
 
 const BookingBox = () => {
   const [activeTab, setActiveTab] = useState('chauffeur');
+  const [locations, setLocations] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [priceLoading, setPriceLoading] = useState(false);
+  const { toast } = useToast();
+  
   const [bookingData, setBookingData] = useState({
     pickupLocation: '',
     destination: '',
@@ -26,30 +31,79 @@ const BookingBox = () => {
 
   const [showPromoCode, setShowPromoCode] = useState(false);
   const [estimatedPrice, setEstimatedPrice] = useState(0);
+  const [priceBreakdown, setPriceBreakdown] = useState(null);
 
-  const calculatePrice = useMemo(() => {
-    const { vehicleType, extras, paymentMethod, promoCode } = bookingData;
-    const basePrices = mockPricingCalculator.basePrices[vehicleType] || mockPricingCalculator.basePrices.Economy;
-    
-    let basePrice = activeTab === 'chauffeur' ? basePrices.hourly : basePrices.daily;
-    
-    // Add extras
-    let extrasTotal = extras.reduce((total, extra) => {
-      return total + (mockPricingCalculator.extras[extra]?.price || 0);
-    }, 0);
+  // Load locations on component mount
+  useEffect(() => {
+    const loadLocations = async () => {
+      try {
+        const response = await LocationService.getAll();
+        if (response.success) {
+          setLocations(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to load locations:', error);
+        // Fallback to mock locations
+        setLocations([
+          { id: 'sfo', name: 'San Francisco Airport (SFO)' },
+          { id: 'downtown-sf', name: 'Downtown San Francisco' },
+          { id: 'silicon-valley', name: 'Silicon Valley' },
+          { id: 'oakland-airport', name: 'Oakland Airport (OAK)' },
+          { id: 'san-jose-airport', name: 'San Jose Airport (SJC)' },
+          { id: 'napa-valley', name: 'Napa Valley' }
+        ]);
+      }
+    };
 
-    let totalPrice = basePrice + extrasTotal;
+    loadLocations();
+  }, []);
 
-    // Apply payment method discount
-    const paymentDiscount = mockPricingCalculator.paymentMethods.find(p => p.id === paymentMethod)?.discount || 0;
-    totalPrice = totalPrice * (1 - paymentDiscount);
+  // Calculate price whenever relevant fields change
+  useEffect(() => {
+    const calculatePrice = async () => {
+      if (!bookingData.vehicleType || !bookingData.pickupLocation) {
+        setEstimatedPrice(0);
+        setPriceBreakdown(null);
+        return;
+      }
 
-    // Apply promo code
-    const promoDiscount = mockPricingCalculator.promoCode[promoCode]?.discount || 0;
-    totalPrice = totalPrice * (1 - promoDiscount);
+      setPriceLoading(true);
+      try {
+        const priceRequest = {
+          vehicle_type: bookingData.vehicleType,
+          service_type: activeTab,
+          duration_hours: 1, // Default for demo
+          duration_days: activeTab === 'rental' ? 1 : null,
+          extras: bookingData.extras,
+          payment_method: bookingData.paymentMethod,
+          promo_code: bookingData.promoCode || null
+        };
 
-    return Math.round(totalPrice);
-  }, [bookingData, activeTab]);
+        const response = await PricingService.calculate(priceRequest);
+        if (response.success) {
+          setEstimatedPrice(response.data.total_price);
+          setPriceBreakdown(response.data.breakdown);
+        }
+      } catch (error) {
+        console.error('Price calculation error:', error);
+        // Fallback to simple calculation
+        const basePrice = {
+          Economy: 45,
+          Premium: 85,
+          SUV: 95,
+          Van: 75,
+          Marine: 285
+        }[bookingData.vehicleType] || 45;
+        
+        setEstimatedPrice(basePrice);
+      } finally {
+        setPriceLoading(false);
+      }
+    };
+
+    const debounceTimer = setTimeout(calculatePrice, 500);
+    return () => clearTimeout(debounceTimer);
+  }, [bookingData.vehicleType, bookingData.extras, bookingData.paymentMethod, bookingData.promoCode, bookingData.pickupLocation, activeTab]);
 
   const handleInputChange = (field, value) => {
     setBookingData(prev => ({
@@ -67,10 +121,113 @@ const BookingBox = () => {
     }));
   };
 
-  const handleBooking = () => {
-    // Mock booking logic
-    alert(`Booking confirmed! Estimated price: $${calculatePrice}`);
+  const handleBooking = async () => {
+    // Validate required fields
+    if (!bookingData.pickupLocation || !bookingData.date || !bookingData.time) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in pickup location, date, and time.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (activeTab === 'chauffeur' && !bookingData.destination) {
+      toast({
+        title: "Missing Destination",
+        description: "Please select a destination for chauffeur service.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    if (activeTab === 'rental' && (!bookingData.returnDate || !bookingData.returnTime)) {
+      toast({
+        title: "Missing Return Information",
+        description: "Please select return date and time for rental service.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Check if user is authenticated
+    if (!AuthService.isAuthenticated()) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to make a booking.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const bookingPayload = {
+        pickup_location: bookingData.pickupLocation,
+        destination: activeTab === 'chauffeur' ? bookingData.destination : null,
+        pickup_date: bookingData.date,
+        pickup_time: bookingData.time,
+        return_date: activeTab === 'rental' ? bookingData.returnDate : null,
+        return_time: activeTab === 'rental' ? bookingData.returnTime : null,
+        passengers: bookingData.passengers,
+        vehicle_type: bookingData.vehicleType,
+        extras: bookingData.extras,
+        payment_method: bookingData.paymentMethod,
+        promo_code: bookingData.promoCode || null
+      };
+
+      const response = await BookingService.create(bookingPayload);
+      
+      if (response.success) {
+        toast({
+          title: "Booking Created!",
+          description: `Your ${activeTab} booking has been confirmed. Estimated price: $${estimatedPrice}`,
+        });
+        
+        // Reset form
+        setBookingData({
+          pickupLocation: '',
+          destination: '',
+          date: '',
+          time: '',
+          returnDate: '',
+          returnTime: '',
+          passengers: 1,
+          vehicleType: 'Economy',
+          extras: [],
+          paymentMethod: 'card',
+          promoCode: ''
+        });
+        setShowPromoCode(false);
+      }
+    } catch (error) {
+      console.error('Booking error:', error);
+      toast({
+        title: "Booking Failed",
+        description: handleApiError(error),
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Available extras
+  const availableExtras = [
+    { key: 'childSeat', label: 'Child Seat (+$15)', price: 15 },
+    { key: 'meetGreet', label: 'Meet & Greet (+$25)', price: 25 },
+    { key: 'luggage', label: 'Extra Luggage (+$10)', price: 10 },
+    { key: 'wifi', label: 'WiFi Hotspot (+$5)', price: 5 }
+  ];
+
+  // Payment methods with discounts
+  const paymentMethods = [
+    { id: 'icp', name: 'ICP (Internet Computer) (-15%)', discount: 0.15 },
+    { id: 'usdt', name: 'USDT (-10%)', discount: 0.10 },
+    { id: 'btc', name: 'Bitcoin (-10%)', discount: 0.10 },
+    { id: 'eth', name: 'Ethereum (-10%)', discount: 0.10 },
+    { id: 'card', name: 'Credit Card', discount: 0 }
+  ];
 
   return (
     <div className="booking-box">
