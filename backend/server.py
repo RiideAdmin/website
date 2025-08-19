@@ -520,7 +520,7 @@ async def get_current_job(current_user: User = Depends(get_current_user)):
     # Find current active booking for this driver
     current_jobs = await db.find_documents("bookings", {
         "driver_id": driver["id"],
-        "status": {"$in": ["driver_assigned", "en_route_to_pickup", "arrived_pickup", "en_route_to_dropoff"]}
+        "status": {"$nin": ["completed", "cancelled"]}
     }, limit=1)
     
     current_job = current_jobs[0] if current_jobs else None
