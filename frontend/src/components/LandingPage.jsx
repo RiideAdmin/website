@@ -236,7 +236,7 @@ const LandingPage = () => {
 
           <div className="services-showcase">
             <div className="services-tabs">
-              {mockServices.map((service, index) => (
+              {services.map((service, index) => (
                 <button
                   key={service.id}
                   className={`service-tab ${activeService === index ? 'active' : ''}`}
@@ -255,42 +255,44 @@ const LandingPage = () => {
               ))}
             </div>
 
-            <div className="service-detail">
-              <div className="service-info">
-                <h3 className="heading-1">{mockServices[activeService].title}</h3>
-                <p className="body-medium">{mockServices[activeService].description}</p>
-                
-                <ul className="service-features">
-                  {mockServices[activeService].features.map((feature, index) => (
-                    <li key={index} className="feature-item">
-                      <CheckCircle2 className="w-5 h-5" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+            {services.length > 0 && (
+              <div className="service-detail">
+                <div className="service-info">
+                  <h3 className="heading-1">{services[activeService].title}</h3>
+                  <p className="body-medium">{services[activeService].description}</p>
+                  
+                  <ul className="service-features">
+                    {services[activeService].features?.map((feature, index) => (
+                      <li key={index} className="feature-item">
+                        <CheckCircle2 className="w-5 h-5" />
+                        {feature}
+                      </li>
+                    )) || []}
+                  </ul>
 
-                <div className="service-pricing">
-                  <span className="price-label">Starting from</span>
-                  <span className="price-value">${mockServices[activeService].startingPrice}/hr</span>
+                  <div className="service-pricing">
+                    <span className="price-label">Starting from</span>
+                    <span className="price-value">${services[activeService].starting_price}/hr</span>
+                  </div>
+
+                  <Button className="btn-primary">
+                    Book {services[activeService].title}
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
                 </div>
 
-                <Button className="btn-primary">
-                  Book {mockServices[activeService].title}
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
+                <div className="service-image">
+                  <img 
+                    src={services[activeService].icon === 'Anchor' 
+                      ? "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop"
+                      : "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&h=400&fit=crop"
+                    }
+                    alt={`${services[activeService].title} service`}
+                    className="service-showcase-image"
+                  />
+                </div>
               </div>
-
-              <div className="service-image">
-                <img 
-                  src={mockServices[activeService].icon === 'Anchor' 
-                    ? "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&h=400&fit=crop"
-                    : "https://images.unsplash.com/photo-1617788138017-80ad40651399?w=600&h=400&fit=crop"
-                  }
-                  alt={`${mockServices[activeService].title} service`}
-                  className="service-showcase-image"
-                />
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
