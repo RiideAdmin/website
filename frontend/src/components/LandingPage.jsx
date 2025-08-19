@@ -6,14 +6,7 @@ import {
 } from 'lucide-react';
 import { Button } from './ui/button';
 import BookingBox from './BookingBox';
-import { 
-  mockVehicles, 
-  mockMarineVehicles, 
-  mockServices, 
-  mockTestimonials,
-  mockBlogPosts,
-  mockFAQs 
-} from '../data/mock';
+import { VehicleService, ContentService, handleApiError } from '../services/api';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 const LandingPage = () => {
