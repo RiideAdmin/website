@@ -537,16 +537,16 @@ const LandingPage = () => {
           </div>
 
           <div className="blog-grid">
-            {mockBlogPosts.map((post) => (
+            {blogPosts.map((post) => (
               <article key={post.id} className="blog-card">
                 <div className="blog-image">
-                  <img src={post.image} alt={post.title} />
+                  <img src={post.image_url} alt={post.title} />
                   <div className="blog-category">{post.category}</div>
                 </div>
                 <div className="blog-content">
                   <div className="blog-meta">
-                    <span className="blog-date">{post.publishDate}</span>
-                    <span className="blog-read-time">{post.readTime}</span>
+                    <span className="blog-date">{post.publish_date}</span>
+                    <span className="blog-read-time">{post.read_time}</span>
                   </div>
                   <h3 className="blog-title">{post.title}</h3>
                   <p className="blog-excerpt">{post.excerpt}</p>
