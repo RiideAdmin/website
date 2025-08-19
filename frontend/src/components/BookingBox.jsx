@@ -504,11 +504,18 @@ const BookingBox = () => {
         <div className="price-estimate">
           <div className="price-row">
             <span className="price-label">Estimated Price:</span>
-            <span className="price-value">${calculatePrice}</span>
+            <span className="price-value">
+              {priceLoading ? 'Calculating...' : `$${estimatedPrice}`}
+            </span>
           </div>
-          {bookingData.promoCode && mockPricingCalculator.promoCode[bookingData.promoCode] && (
+          {bookingData.promoCode && priceBreakdown?.promo_discount > 0 && (
             <div className="promo-applied">
-              ✓ {mockPricingCalculator.promoCode[bookingData.promoCode].description}
+              ✓ Promo code applied: -${priceBreakdown.promo_discount}
+            </div>
+          )}
+          {priceBreakdown?.payment_discount > 0 && (
+            <div className="promo-applied">
+              ✓ Crypto payment discount: -${priceBreakdown.payment_discount}
             </div>
           )}
         </div>
@@ -516,9 +523,10 @@ const BookingBox = () => {
         {/* Book Button */}
         <Button 
           onClick={handleBooking}
+          disabled={loading || priceLoading}
           className="btn-primary book-button"
         >
-          Check Availability
+          {loading ? 'Processing...' : 'Check Availability'}
         </Button>
       </div>
     </div>
