@@ -1,4 +1,4 @@
-/* RIIDE Landing Page Styles - Dark Theme with #22B573 Brand Color */
+/* RIIDE Landing Page Styles - Updated Brand Design System */
 
 /* Reset and Base Styles */
 * {
@@ -7,48 +7,97 @@
   padding: 0;
 }
 
-/* CSS Variables - RIIDE Brand Colors */
+/* CSS Variables - RIIDE Brand Design System */
 :root {
-  /* Backgrounds - Dark Theme Foundation */
-  --bg-primary: #000000;           /* Main page background */
-  --bg-secondary: #121212;         /* Card/section backgrounds */
-  --bg-overlay: rgba(255, 255, 255, 0.1); /* Subtle overlays */
-  
-  /* Text - High Contrast for Dark Theme */
-  --text-primary: #FFFFFF;         /* Main headings and content */
-  --text-secondary: rgba(255, 255, 255, 0.85); /* Supporting text */
-  --text-muted: #4D4D4D;           /* Muted text, navigation */
-  
-  /* Borders - Subtle Dark Theme */
-  --border-subtle: rgba(255, 255, 255, 0.25); /* Subtle separators */
-  --border-medium: rgba(255, 255, 255, 0.4);  /* Standard borders */
-  
-  /* RIIDE BRAND COLORS - Adapted to Dark Theme */
-  --brand-primary: #22B573;        /* RIIDE green primary */
-  --brand-hover: rgba(34, 181, 115, 0.1); /* Hover backgrounds */
-  --brand-active: #1a8f5c;         /* Active states */
-  --brand-light: rgba(34, 181, 115, 0.2); /* Light accent */
+  /* Riide Brand Colors */
+  --riide-primary: #22B573;
+  --riide-primary-dark: #1EA965;
+  --riide-accent: #00A86B;
+  --riide-bg: #0A0A0A;
+  --riide-surface: #1E1E1E;
+  --riide-text: #FFFFFF;
+  --riide-text-muted: #9CA3AF;
+
+  /* Typography */
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --h1-size: 2rem;
+  --h2-size: 1.5rem;
+  --h3-size: 1.25rem;
+  --body-size: 1rem;
+  --line-height: 1.6;
+
+  /* Spacing & Radius */
+  --radius: 0.75rem;
+  --gap: 1rem;
+
+  /* Legacy compatibility (for existing components) */
+  --bg-primary: var(--riide-bg);
+  --bg-secondary: var(--riide-surface);
+  --text-primary: var(--riide-text);
+  --text-secondary: var(--riide-text-muted);
+  --text-muted: var(--riide-text-muted);
+  --brand-primary: var(--riide-primary);
+  --brand-hover: rgba(34, 181, 115, 0.1);
+  --brand-active: var(--riide-primary-dark);
+  --brand-light: rgba(34, 181, 115, 0.2);
+  --border-subtle: rgba(255, 255, 255, 0.15);
+  --border-medium: rgba(255, 255, 255, 0.25);
 }
 
-/* Typography System - Dark Theme */
+/* Utility Classes */
+.text-foreground { color: var(--riide-text); }
+.text-muted { color: var(--riide-text-muted); }
+
+.bg-primary { background: var(--riide-primary); color: var(--riide-bg); }
+.bg-surface { background: var(--riide-surface); color: var(--riide-text); }
+.bg-gradient-riide { background: linear-gradient(90deg, var(--riide-primary) 0%, var(--riide-accent) 100%); }
+
+.btn {
+  border-radius: var(--radius);
+  padding: 0.75rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
+}
+.btn-primary {
+  background: var(--riide-primary);
+  color: var(--riide-bg);
+  font-weight: 600;
+}
+.btn-primary:hover { 
+  background: var(--riide-primary-dark); 
+  transform: translateY(-1px);
+}
+
+.card {
+  background: var(--riide-surface);
+  border-radius: var(--radius);
+  padding: var(--gap);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Typography System */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: var(--font-sans);
+  background: var(--riide-bg);
+  color: var(--riide-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  line-height: var(--line-height);
 }
 
-/* Typography Scale */
+/* Typography Scale - Updated */
 .display-huge { 
   font-size: clamp(48px, 8vw, 72px); 
   font-weight: 700; 
   line-height: 1.1; 
   letter-spacing: -0.02em; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .display-large { 
@@ -56,75 +105,75 @@ body {
   font-weight: 600; 
   line-height: 1.1; 
   letter-spacing: -0.02em; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .display-medium { 
-  font-size: clamp(28px, 4vw, 32px); 
+  font-size: clamp(28px, 4vw, var(--h1-size)); 
   font-weight: 600; 
   line-height: 1.25; 
   letter-spacing: -0.01em; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .heading-1 { 
-  font-size: clamp(24px, 3vw, 28px); 
+  font-size: clamp(24px, 3vw, var(--h1-size)); 
   font-weight: 600; 
   line-height: 1.2; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .heading-2 { 
-  font-size: clamp(20px, 2.5vw, 24px); 
+  font-size: clamp(20px, 2.5vw, var(--h2-size)); 
   font-weight: 600; 
   line-height: 1.3; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .heading-3 { 
-  font-size: clamp(18px, 2vw, 20px); 
+  font-size: clamp(18px, 2vw, var(--h3-size)); 
   font-weight: 600; 
   line-height: 1.4; 
-  color: var(--text-primary); 
+  color: var(--riide-text); 
 }
 
 .body-large { 
   font-size: clamp(18px, 1.5vw, 20px); 
   font-weight: 400; 
-  line-height: 1.6; 
-  color: var(--text-secondary); 
+  line-height: var(--line-height); 
+  color: var(--riide-text-muted); 
 }
 
 .body-medium { 
-  font-size: 16px; 
+  font-size: var(--body-size); 
   font-weight: 400; 
-  line-height: 1.5; 
-  color: var(--text-secondary); 
+  line-height: var(--line-height); 
+  color: var(--riide-text-muted); 
 }
 
 .body-small { 
   font-size: 14px; 
   font-weight: 400; 
   line-height: 1.4; 
-  color: var(--text-secondary); 
+  color: var(--riide-text-muted); 
 }
 
 /* Brand Text Color */
 .text-brand { 
-  color: var(--brand-primary); 
+  color: var(--riide-primary); 
 }
 
-/* Button Styles - Sharp Corners per Guidelines */
+/* Button Styles - Updated with Border Radius */
 .btn-primary {
-  background: var(--brand-primary);
-  color: #000000;
+  background: var(--riide-primary);
+  color: var(--riide-bg);
   border: none;
-  border-radius: 0px;
+  border-radius: var(--radius);
   padding: 14px 24px;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease;
   min-height: 48px;
   text-decoration: none;
   display: inline-flex;
@@ -136,8 +185,9 @@ body {
 }
 
 .btn-primary:hover {
-  background: var(--brand-active);
+  background: var(--riide-primary-dark);
   transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(34, 181, 115, 0.3);
 }
 
 .btn-primary:active {
@@ -145,15 +195,15 @@ body {
 }
 
 .btn-secondary {
-  background: var(--bg-overlay);
-  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--riide-text);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   padding: 14px 24px;
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease;
   min-height: 48px;
   text-decoration: none;
   display: inline-flex;
@@ -164,9 +214,9 @@ body {
 }
 
 .btn-secondary:hover {
-  background: var(--text-primary);
-  color: var(--bg-primary);
-  border-color: var(--text-primary);
+  background: var(--riide-text);
+  color: var(--riide-bg);
+  border-color: var(--riide-text);
 }
 
 /* Layout Container */
@@ -178,13 +228,13 @@ body {
 
 /* Landing Page Specific Styles */
 .landing-page {
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   min-height: 100vh;
 }
 
-/* Header Styles */
+/* Header Styles - Updated */
 .dark-header {
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border-bottom: 1px solid var(--border-subtle);
   padding: 16px 0;
   position: fixed;
@@ -214,13 +264,13 @@ body {
 .logo-text {
   font-size: 24px;
   font-weight: 700;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   letter-spacing: -0.01em;
 }
 
 .logo-tagline {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-weight: 400;
 }
 
@@ -231,7 +281,7 @@ body {
 }
 
 .dark-nav-link {
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   text-decoration: none;
   font-size: 16px;
   font-weight: 400;
@@ -239,7 +289,7 @@ body {
 }
 
 .dark-nav-link:hover {
-  color: var(--text-primary);
+  color: var(--riide-text);
 }
 
 .header-actions {
@@ -258,7 +308,7 @@ body {
   display: none;
   background: none;
   border: none;
-  color: var(--text-primary);
+  color: var(--riide-text);
   cursor: pointer;
   padding: 8px;
 }
@@ -270,7 +320,7 @@ body {
   top: 100%;
   left: 0;
   right: 0;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border-bottom: 1px solid var(--border-subtle);
   padding: 20px;
 }
@@ -278,7 +328,7 @@ body {
 .mobile-nav-link {
   display: block;
   padding: 12px 0;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
   text-decoration: none;
   border-bottom: 1px solid var(--border-subtle);
 }
@@ -290,10 +340,10 @@ body {
   margin-top: 20px;
 }
 
-/* Hero Section */
+/* Hero Section - Updated */
 .hero-section {
   padding: 120px 0 80px;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   position: relative;
 }
 
@@ -318,9 +368,9 @@ body {
   align-items: center;
   gap: 8px;
   background: var(--brand-light);
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   padding: 8px 16px;
-  border-radius: 0px;
+  border-radius: var(--radius);
   font-size: 14px;
   font-weight: 500;
   width: fit-content;
@@ -344,13 +394,13 @@ body {
 .stat-number {
   font-size: 32px;
   font-weight: 700;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   line-height: 1;
 }
 
 .stat-label {
   font-size: 14px;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   margin-top: 4px;
 }
 
@@ -377,7 +427,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-size: 14px;
 }
 
@@ -387,7 +437,7 @@ body {
 
 .hero-image-container {
   position: relative;
-  border-radius: 0px;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -395,7 +445,7 @@ body {
   width: 100%;
   height: 500px;
   object-fit: cover;
-  border-radius: 0px;
+  border-radius: var(--radius);
 }
 
 .hero-overlay {
@@ -408,29 +458,30 @@ body {
   background: rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(12px);
   padding: 12px 20px;
-  border-radius: 0px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   font-size: 14px;
   font-weight: 500;
 }
 
-/* Booking Section */
+/* Booking Section - Updated */
 .booking-section {
   padding: 80px 0;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
 }
 
-/* Booking Box Styles */
+/* Booking Box Styles - Updated */
 .booking-box {
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   padding: 40px;
   max-width: 800px;
   margin: 0 auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .booking-header {
@@ -444,8 +495,8 @@ body {
 
 .tabs-list {
   display: flex;
-  background: var(--bg-secondary);
-  border-radius: 0px;
+  background: var(--riide-surface);
+  border-radius: var(--radius);
   padding: 4px;
   margin-bottom: 32px;
 }
@@ -459,17 +510,17 @@ body {
   padding: 12px 24px;
   background: none;
   border: none;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   cursor: pointer;
   transition: all 0.3s ease;
-  border-radius: 0px;
+  border-radius: calc(var(--radius) - 4px);
   font-size: 16px;
   font-weight: 500;
 }
 
 .tab-trigger[data-state="active"] {
-  background: var(--brand-primary);
-  color: #000000;
+  background: var(--riide-primary);
+  color: var(--riide-bg);
 }
 
 .booking-form {
@@ -496,22 +547,23 @@ body {
   gap: 8px;
   font-size: 14px;
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--riide-text);
 }
 
 .form-input, .select-trigger {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   padding: 12px 16px;
-  color: var(--text-primary);
+  color: var(--riide-text);
   font-size: 16px;
   transition: border-color 0.3s ease;
 }
 
 .form-input:focus, .select-trigger:focus {
   outline: none;
-  border-color: var(--brand-primary);
+  border-color: var(--riide-primary);
+  box-shadow: 0 0 0 3px rgba(34, 181, 115, 0.1);
 }
 
 .extras-grid {
@@ -529,7 +581,7 @@ body {
 
 .extra-label {
   font-size: 14px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
   cursor: pointer;
 }
 
@@ -539,17 +591,18 @@ body {
   gap: 8px;
   background: none;
   border: none;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   cursor: pointer;
   font-size: 14px;
   padding: 8px 0;
 }
 
 .price-estimate {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   padding: 20px;
-  border-radius: 0px;
+  border-radius: var(--radius);
   margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .price-row {
@@ -560,17 +613,17 @@ body {
 
 .price-label {
   font-size: 16px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
 }
 
 .price-value {
   font-size: 24px;
   font-weight: 600;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
 }
 
 .promo-applied {
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   font-size: 14px;
   margin-top: 8px;
 }
@@ -583,7 +636,7 @@ body {
   min-height: 56px;
 }
 
-/* Sections Styling */
+/* Sections Styling - Updated */
 .services-section,
 .fleet-section,
 .how-it-works-section,
@@ -593,19 +646,19 @@ body {
 .blog-section,
 .faq-section {
   padding: 80px 0;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
 }
 
 .services-section {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
 }
 
 .how-it-works-section {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
 }
 
 .testimonials-section {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
 }
 
 .section-header {
