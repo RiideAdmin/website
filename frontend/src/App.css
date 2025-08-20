@@ -1368,9 +1368,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Driver Dashboard Styles */
+# Driver Dashboard Styles - Updated with New Design System */
 .driver-page {
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   min-height: 100vh;
   padding-top: 80px;
 }
@@ -1388,15 +1388,16 @@ html {
   min-height: calc(100vh - 120px);
 }
 
-/* Driver Header */
+/* Driver Header - Updated */
 .driver-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   padding: 20px 24px;
-  border-radius: 0px;
+  border-radius: var(--radius);
   border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .driver-status {
@@ -1419,7 +1420,7 @@ html {
 }
 
 .status-dot.online {
-  background: var(--brand-primary);
+  background: var(--riide-primary);
   box-shadow: 0 0 0 2px rgba(34, 181, 115, 0.3);
 }
 
@@ -1429,14 +1430,14 @@ html {
 
 .status-text {
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--riide-text);
 }
 
 .driver-earnings {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   font-weight: 600;
   font-size: 18px;
 }
@@ -1449,7 +1450,8 @@ html {
 
 .power-btn {
   min-width: 120px;
-  border-radius: 0px;
+  border-radius: var(--radius);
+  transition: all 0.3s ease;
 }
 
 .power-btn.online {
@@ -1458,16 +1460,22 @@ html {
 }
 
 .power-btn.offline {
-  background: var(--brand-primary);
-  color: #000000;
+  background: var(--riide-primary);
+  color: var(--riide-bg);
 }
 
-/* Current Job Status */
+.power-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Current Job Status - Updated */
 .current-job-status {
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .job-status-header {
@@ -1481,13 +1489,13 @@ html {
   color: white;
   font-weight: 500;
   padding: 6px 12px;
-  border-radius: 0px;
+  border-radius: var(--radius);
 }
 
 .job-fare {
   font-size: 20px;
   font-weight: 600;
-  color: var(--brand-primary);
+  color: var(--riide-primary);
 }
 
 .job-route-info {
@@ -1501,7 +1509,7 @@ html {
   display: flex;
   align-items: center;
   gap: 12px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
 }
 
 .route-line {
@@ -1517,8 +1525,9 @@ html {
   align-items: center;
   margin: 20px 0;
   padding: 16px;
-  background: var(--bg-primary);
-  border-radius: 0px;
+  background: var(--riide-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
 }
 
 .passenger-name,
@@ -1526,7 +1535,7 @@ html {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
 }
 
 .job-actions {
@@ -1540,15 +1549,21 @@ html {
   padding: 14px 24px;
   font-size: 16px;
   font-weight: 500;
-  border-radius: 0px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.3s ease;
 }
 
 .action-btn.primary {
-  background: var(--brand-primary);
-  color: #000000;
+  background: var(--riide-primary);
+  color: var(--riide-bg);
+}
+
+.action-btn.primary:hover {
+  background: var(--riide-primary-dark);
+  transform: translateY(-1px);
 }
 
 .action-btn.success {
@@ -1556,7 +1571,12 @@ html {
   color: white;
 }
 
-/* Waiting State */
+.action-btn.success:hover {
+  background: #059669;
+  transform: translateY(-1px);
+}
+
+/* Waiting State - Updated */
 .waiting-state {
   display: flex;
   flex-direction: column;
@@ -1564,10 +1584,11 @@ html {
   justify-content: center;
   padding: 60px 20px;
   text-align: center;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   min-height: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .waiting-animation {
@@ -1588,7 +1609,7 @@ html {
 }
 
 .car-icon {
-  color: var(--brand-primary);
+  color: var(--riide-primary);
   z-index: 1;
   position: relative;
 }
@@ -1602,16 +1623,16 @@ html {
 .waiting-title {
   font-size: 24px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--riide-text);
   margin-bottom: 8px;
 }
 
 .waiting-text {
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-size: 16px;
 }
 
-/* Offline State */
+/* Offline State - Updated */
 .offline-state {
   display: flex;
   flex-direction: column;
@@ -1619,10 +1640,11 @@ html {
   justify-content: center;
   padding: 60px 20px;
   text-align: center;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   min-height: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .offline-content {
@@ -1639,23 +1661,24 @@ html {
 .offline-title {
   font-size: 24px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--riide-text);
 }
 
 .offline-text {
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-size: 16px;
 }
 
-/* Driver Map */
+/* Driver Map - Updated */
 .driver-map {
   flex: 1;
   min-height: 400px;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .map-placeholder {
@@ -1665,7 +1688,7 @@ html {
   justify-content: center;
   height: 100%;
   position: relative;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  background: linear-gradient(135deg, var(--riide-bg) 0%, var(--riide-surface) 100%);
 }
 
 .map-content {
@@ -1677,17 +1700,17 @@ html {
 }
 
 .location-marker {
-  color: var(--brand-primary);
+  color: var(--riide-primary);
 }
 
 .map-info p {
-  color: var(--text-primary);
+  color: var(--riide-text);
   font-weight: 500;
   margin: 0;
 }
 
 .coordinates {
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-size: 14px;
 }
 
@@ -1705,11 +1728,11 @@ html {
 }
 
 .map-overlay p {
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   font-size: 16px;
 }
 
-/* In-App Map */
+/* In-App Map - Updated */
 .in-app-map {
   height: 100%;
   display: flex;
@@ -1721,14 +1744,14 @@ html {
   justify-content: space-between;
   align-items: center;
   padding: 16px;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .map-canvas {
   flex: 1;
   position: relative;
-  background: #2a2a2a;
+  background: var(--riide-surface);
   overflow: hidden;
 }
 
@@ -1761,7 +1784,7 @@ html {
 
 .map-info {
   padding: 16px;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -1769,19 +1792,20 @@ html {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
 }
 
-/* Job Offer Modal */
+/* Job Offer Modal - Updated */
 .job-offer-modal {
   max-width: 500px;
-  background: var(--bg-primary);
+  background: var(--riide-bg);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 .job-offer-title {
-  color: var(--text-primary);
+  color: var(--riide-text);
   font-size: 20px;
   font-weight: 600;
 }
@@ -1825,12 +1849,12 @@ html {
 .route-label {
   font-size: 12px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   text-transform: uppercase;
 }
 
 .route-address {
-  color: var(--text-primary);
+  color: var(--riide-text);
   font-size: 14px;
   line-height: 1.4;
 }
@@ -1844,9 +1868,9 @@ html {
 .map-placeholder {
   width: 100px;
   height: 80px;
-  background: var(--bg-secondary);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 0px;
+  border-radius: var(--radius);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1884,7 +1908,7 @@ html {
 .route-path {
   width: 2px;
   height: 20px;
-  background: var(--brand-primary);
+  background: var(--riide-primary);
 }
 
 .job-stats {
@@ -1898,37 +1922,39 @@ html {
   align-items: center;
   gap: 8px;
   padding: 12px;
-  background: var(--bg-secondary);
-  border-radius: 0px;
+  background: var(--riide-surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
 }
 
 .stat-item svg {
-  color: var(--brand-primary);
+  color: var(--riide-primary);
 }
 
 .stat-label {
   font-size: 12px;
-  color: var(--text-muted);
+  color: var(--riide-text-muted);
   text-transform: uppercase;
 }
 
 .stat-value {
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--riide-text);
   margin-left: auto;
 }
 
 .passenger-info {
   text-align: center;
   padding: 16px;
-  background: var(--bg-secondary);
-  border-radius: 0px;
+  background: var(--riide-surface);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
 }
 
 .passenger-name {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--riide-text);
   margin-bottom: 8px;
 }
 
@@ -1937,7 +1963,7 @@ html {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: var(--text-secondary);
+  color: var(--riide-text-muted);
   font-size: 14px;
 }
 
@@ -1948,10 +1974,11 @@ html {
 }
 
 .decline-btn {
-  border-radius: 0px;
-  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  background: var(--riide-surface);
   border: 1px solid var(--border-subtle);
-  color: var(--text-primary);
+  color: var(--riide-text);
+  transition: all 0.3s ease;
 }
 
 .decline-btn:hover {
@@ -1960,10 +1987,110 @@ html {
 }
 
 .accept-btn {
-  border-radius: 0px;
-  background: var(--brand-primary);
-  color: #000000;
+  border-radius: var(--radius);
+  background: var(--riide-primary);
+  color: var(--riide-bg);
   font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.accept-btn:hover {
+  background: var(--riide-primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Driver Settings Modal - Updated */
+.driver-settings-modal {
+  max-width: 600px;
+  background: var(--riide-bg);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 4px 0;
+}
+
+.setting-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.setting-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--riide-text);
+}
+
+.setting-description {
+  color: var(--riide-text-muted);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.navigation-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nav-option {
+  display: flex;
+  items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--riide-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.nav-option:hover {
+  border-color: var(--riide-primary);
+}
+
+.nav-option-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  flex: 1;
+}
+
+.nav-option-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-option-name {
+  font-weight: 500;
+  color: var(--riide-text);
+  font-size: 16px;
+}
+
+.nav-option-desc {
+  color: var(--riide-text-muted);
+  font-size: 14px;
+}
+
+.nav-option svg {
+  color: var(--riide-primary);
+  flex-shrink: 0;
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
 }
 
 /* Responsive Design */
